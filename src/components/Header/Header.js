@@ -114,16 +114,58 @@ const Filler = styled.div`
   }
 `;
 
-const NavLink = styled.a`
+const NavLink = ({children, ...delegated}) => {
+  return (<Wrapper>
+    <MainText>
+      {children}
+    </MainText>
+    <HoverText>
+      {children}
+    </HoverText>
+  </Wrapper>)
+};
+
+const Wrapper = styled.a`
+  position: relative;
+  display: block;
   font-size: 1.125rem;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--color-gray-900);
   font-weight: ${WEIGHTS.medium};
+  overflow: hidden;
 
   &:first-of-type {
     color: var(--color-secondary);
   }
+`;
+
+const Text = styled.span`
+  display: block;
+  transform: translateY(var(--start-position));
+  transition: transform 500ms;
+
+  ${Wrapper}:hover & {
+    transform: translateY(var(--hover-position));
+    transition: transform 250ms;
+  } 
+`;
+
+const MainText = styled(Text)`
+  --start-position: 0%;
+  --hover-position: -100%;
+`;
+
+const HoverText = styled(Text)`
+  --start-position: 100%;
+  --hover-position: 0%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  font-weight: bold;
 `;
 
 export default Header;
